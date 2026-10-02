@@ -1,5 +1,6 @@
 
 import time
+import random
 def character_creation():
     def take_info():
         player_name = input("Please type your desired name: ")
@@ -112,13 +113,19 @@ def attack_enemy(player, enemy, question):
     if enemy["health"] < 0:
         enemy["health"] = 0 
 
-    print(f"{player['name']} dealt {total_damage} to the {enemy['name']}. \{enemy['name']} Health: {enemy['health']} health.")
+    print(f"{player['name']} dealt {total_damage} to the {enemy['name']}. \n{enemy['name']}'s Health: {enemy['health']} health.")
+def enemy_attack(player, enemy):
+    player["health"] -= enemy["damage"]
+    if player["health"] < 0:
+        player["health"] = 0
+    print(f"The {enemy['name']} dealt {enemy["damage"]} to {player["name"]}. \n{player['name']}'s Health: {player['health']} health.")
+
 def create_question():
     question = {
         "question" : "What is 9 * 13?",
         "answer" : "117",
         "time" : 5,
-        "bonus_damage" : 5
+        "bonus_damage" : 0
     }
     return question
 def create_hard_question():
@@ -126,18 +133,19 @@ def create_hard_question():
         "question" : "What is x if 9x - 3 = 69?",
         "answer" : "8",
         "time" : 10,
-        "bonus_damage" : 10
+        "bonus_damage" : 5
     }
     return hard_question
-def ask_question(question):
+def ask_question(question, player, enemy):
     print(question["question"])
     print(f"You have {question['time']} seconds to answer.")
     answer = input("Your answer: ")
     if question["answer"] == answer:
         print("\nCorrect!\n")
-        return True
+        attack_enemy(player, enemy, question)
     else:
-        return False
+        print("\nIncorrect!(haha loser)\n")
+        enemy_attack(player, enemy)
 def main():
     print("Hello, my dear friend, and welcome to the world of Loren.")
     name, gender, possessive = character_creation()
@@ -150,10 +158,7 @@ def main():
     enemy = create_enemy()
     road_encounter(name, possessive, enemy)
     question = create_question()
-    if ask_question(question):
-        attack_enemy(player, enemy, question)
-    else:
-        print("Question incorrect")
+    ask_question(question, player, enemy)
 
 
 main()
