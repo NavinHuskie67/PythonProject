@@ -107,7 +107,11 @@ Health: {enemy["health"]}
 """)
 def attack_enemy(player, enemy):
     enemy["health"] -= player["damage"]
-    print(f"{player["name"]} dealt {player["damage"]} to the {enemy["name"]}, who is at {enemy["health"]} health.")
+    #Ensure enemy health does not go below 0
+    if enemy["health"] < 0:
+        enemy["health"] = 0 
+
+    print(f"{player['name']} dealt {player['damage']} to the {enemy['name']}. \nEnemy Health: {enemy['health']} health.")
 
 print("Hello, my dear friend, and welcome to the world of Loren.")
 name, gender, possessive = character_creation()
@@ -116,6 +120,7 @@ player = player_creation(name, gender, possessive)
 print_player_status(player)
 time.sleep(6)
 intro(name, possessive)
+time.sleep(6)
 enemy = create_enemy()
 road_encounter(name, possessive, enemy)
 attack_enemy(player, enemy)
