@@ -25,7 +25,7 @@ def character_creation():
     def confirm_info(player_name, player_gender, player_possessive):
         print(f"You are a {player_gender} well on in {player_possessive} teen years, and your name is {player_name}.")
         change = input("Do you wish to change any of your information? (y/n) ")
-        return (change == "y" or change == "yes")
+        return (change.lower() == "y" or change.lower() == "yes")
 
 
     #Use a main loop to handle choices cleanly
@@ -112,15 +112,38 @@ def attack_enemy(player, enemy):
         enemy["health"] = 0 
 
     print(f"{player['name']} dealt {player['damage']} to the {enemy['name']}. \nEnemy Health: {enemy['health']} health.")
+def create_question():
+    question = {
+        "question" : "What is 9 * 13?",
+        "answer" : "117",
+        "time" : 10,
+        "damage" : 5
+    }
+    return question
+def main():
+    print("Hello, my dear friend, and welcome to the world of Loren.")
+    name, gender, possessive = character_creation()
+    print("\nCharacter creation complete! Welcome to the adventure!")
+    player = player_creation(name, gender, possessive)
+    print_player_status(player)
+    time.sleep(6)
+    intro(name, possessive)
+    time.sleep(6)
+    enemy = create_enemy()
+    road_encounter(name, possessive, enemy)
+    question = create_question()
+    if(ask_question(question)):
+        attack_enemy(player, enemy)
+    else:
+        print("Question incorrect")
+def ask_question(question):
+    print(question["question"])
+    print(f"You have {question['time']} seconds to answer.")
+    answer = input("Your answer: ")
+    if question["answer"] == answer:
+        print("\nCorrect!\n")
+        return True
+    else:
+        return False
 
-print("Hello, my dear friend, and welcome to the world of Loren.")
-name, gender, possessive = character_creation()
-print("\nCharacter creation complete! Welcome to the adventure!")
-player = player_creation(name, gender, possessive)
-print_player_status(player)
-time.sleep(6)
-intro(name, possessive)
-time.sleep(6)
-enemy = create_enemy()
-road_encounter(name, possessive, enemy)
-attack_enemy(player, enemy)
+main()
