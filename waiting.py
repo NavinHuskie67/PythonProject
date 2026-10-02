@@ -105,21 +105,39 @@ down upon the startled {name}.""")
 Name: {enemy["name"]}
 Health: {enemy["health"]}
 """)
-def attack_enemy(player, enemy):
-    enemy["health"] -= player["damage"]
+def attack_enemy(player, enemy, question):
+    total_damage = player["damage"] + question["bonus_damage"]
+    enemy["health"] -= total_damage
     #Ensure enemy health does not go below 0
     if enemy["health"] < 0:
         enemy["health"] = 0 
 
-    print(f"{player['name']} dealt {player['damage']} to the {enemy['name']}. \nEnemy Health: {enemy['health']} health.")
+    print(f"{player['name']} dealt {total_damage} to the {enemy['name']}. \{enemy['name']} Health: {enemy['health']} health.")
 def create_question():
     question = {
         "question" : "What is 9 * 13?",
         "answer" : "117",
-        "time" : 10,
-        "damage" : 5
+        "time" : 5,
+        "bonus_damage" : 5
     }
     return question
+def create_hard_question():
+    hard_question = {
+        "question" : "What is x if 9x - 3 = 69?",
+        "answer" : "8",
+        "time" : 10,
+        "bonus_damage" : 10
+    }
+    return hard_question
+def ask_question(question):
+    print(question["question"])
+    print(f"You have {question['time']} seconds to answer.")
+    answer = input("Your answer: ")
+    if question["answer"] == answer:
+        print("\nCorrect!\n")
+        return True
+    else:
+        return False
 def main():
     print("Hello, my dear friend, and welcome to the world of Loren.")
     name, gender, possessive = character_creation()
@@ -132,18 +150,10 @@ def main():
     enemy = create_enemy()
     road_encounter(name, possessive, enemy)
     question = create_question()
-    if(ask_question(question)):
-        attack_enemy(player, enemy)
+    if ask_question(question):
+        attack_enemy(player, enemy, question)
     else:
         print("Question incorrect")
-def ask_question(question):
-    print(question["question"])
-    print(f"You have {question['time']} seconds to answer.")
-    answer = input("Your answer: ")
-    if question["answer"] == answer:
-        print("\nCorrect!\n")
-        return True
-    else:
-        return False
+
 
 main()
