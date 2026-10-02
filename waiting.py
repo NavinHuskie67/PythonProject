@@ -19,7 +19,7 @@ def character_creation():
             
         player_gender, player_possessive = choose_gender()
             
-        # 1. Best practice: Return data cleanly out of the function
+        #Return data cleanly out of the function
         return player_name, player_gender, player_possessive
 
     def confirm_info(player_name, player_gender, player_possessive):
@@ -28,7 +28,7 @@ def character_creation():
         return (change == "y" or change == "yes")
 
 
-    # 2. Best practice: Use a main loop to handle choices cleanly
+    #Use a main loop to handle choices cleanly
     user_is_changing_mind = True
 
     while user_is_changing_mind:
@@ -36,7 +36,7 @@ def character_creation():
         player_name, player_gender, player_possessive = take_info()
         
         # Check if they want to change it. 
-        # If they type 'y', the loop runs again. If 'n', the loop stops!
+        # If they type 'y', the loop runs again. If 'n', the loop stops
         user_is_changing_mind = confirm_info(player_name, player_gender, player_possessive)
     return player_name, player_gender, player_possessive
 def intro(name, player_possessive):
