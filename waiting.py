@@ -119,7 +119,6 @@ def enemy_attack(player, enemy):
     if player["health"] < 0:
         player["health"] = 0
     print(f"The {enemy['name']} dealt {enemy["damage"]} to {player["name"]}. \n{player['name']}'s Health: {player['health']} health.")
-
 def create_question():
     question = {
         "question" : "What is 9 * 13?",
@@ -159,6 +158,5 @@ def main():
     road_encounter(name, possessive, enemy)
     question = create_question()
     ask_question(question, player, enemy)
-
 
 main()
