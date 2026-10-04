@@ -119,13 +119,34 @@ def enemy_attack(player, enemy):
     if player["health"] < 0:
         player["health"] = 0
     print(f"The {enemy['name']} dealt {enemy["damage"]} to {player["name"]}. \n{player['name']}'s Health: {player['health']} health.")
-def create_question():
-    question = {
+def questions():
+    question =[ 
+        {
         "question" : "What is 9 * 13?",
         "answer" : "117",
         "time" : 5,
         "bonus_damage" : 0
-    }
+        },
+        {
+        "question" : "What is the sum of the solutions to the quadratic equation x^2 - 5x + 6 = 0?",
+        "answer" : "5",
+        "time" : 20,
+        "bonus_damage" : 5
+        },
+        {
+        "question" : "During which phase of mitosis do sister chromatids separate and move toward \nopposite poles of the cell? (type a, b, c, or d): \n(a) - Prophase \n(b) - Metaphase \n(c) - Anaphase \n(d) - Telephase",
+        "answer" : "c",
+        "time" : 10,
+        "bonus_damage" : 10
+        },
+        {
+        "question" : "Which subatomic particle has a negative electrical charge and a mass that \nis approximately 1/1836 the mass of a proton? (type a, b, c, or d): \n(a) - Neutron \n(b) - Positron \n(c) - electron \n(d) - Elentron",
+        "answer" : "c",
+        "time" : 7,
+        "bonus_damage" : 0
+        }
+
+    ]
     return question
 def create_hard_question():
     hard_question = {
@@ -145,6 +166,13 @@ def ask_question(question, player, enemy):
     else:
         print("\nIncorrect!(haha loser)\n")
         enemy_attack(player, enemy)
+def choose_question(question_bank): 
+    question = random.choice(question_bank)
+    return question
+def combat(player, enemy, question_bank):
+    while enemy["health"] > 0:
+        question = choose_question(question_bank)
+        ask_question
 def main():
     print("Hello, my dear friend, and welcome to the world of Loren.")
     name, gender, possessive = character_creation()
@@ -156,7 +184,9 @@ def main():
     time.sleep(6)
     enemy = create_enemy()
     road_encounter(name, possessive, enemy)
-    question = create_question()
+    question = choose_question(questions)
     ask_question(question, player, enemy)
+
+
 
 main()
